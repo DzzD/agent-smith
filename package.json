@@ -1,0 +1,44 @@
+{
+  "name": "agent-smith",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./db/DbManager": "./src/app/db/DbManager.js",
+    "./core/*": "./src/*.js",
+    "./inputs/*": "./src/inputs/*.js",
+    "./net/*": "./src/net/*.js",
+    "./skills/core/*": "./src/skills/core/*.js",
+    "./skills/ext/*": "./src/skills/ext/*.js",
+    "./skills/beta/*": "./src/skills/beta/*.js"
+  },
+  "scripts": {
+    "postinstall": "npm run core:generate && npm --prefix SandboxJavascript install",
+    "core:generate": "app-core --project agent --target src --back",
+    "db:up": "docker compose --env-file examples/.env -f database/compose.yml up -d",
+    "db:down": "docker compose --env-file examples/.env -f database/compose.yml down",
+    "db:update": "node --env-file-if-exists=examples/.env database/updateDb.js",
+    "db:models": "node --env-file=examples/.env scripts/generate-models.js",
+    "cli": "node cli/agent-smith.js",
+    "start": "node examples/AgentSmith/index.js",
+    "test": "node --test test/*.test.js",
+    "start:example": "node examples/AgentSmith/index.js",
+    "start:example:smith": "node examples/AgentSmith/index.js"
+  },
+  "dependencies": {
+    "app-core": "git+https://github.com/DzzD/appcorejs.git#493d966af0c3e66ea3f9a1ae832a621394fc3505",
+    "canvas": "^3.2.3",
+    "docx": "^9.7.1",
+    "dotenv": "^17.4.1",
+    "fast-xml-parser": "^5.8.0",
+    "image-size": "^2.0.2",
+    "jszip": "^3.10.1",
+    "matrix-bot-sdk": "^0.8.0",
+    "matrix-js-sdk": "^41.3.0",
+    "officeparser": "^7.2.3",
+    "pg": "^8.16.3",
+    "undici": "^7.27.1",
+    "yaml": "^2.8.3"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "agentsmith-javascript-sandbox",
+  "private": true,
+  "version": "1.0.0",
+  "type": "commonjs",
+  "dependencies": {
+    "bpmn-auto-layout": "2.0.0-alpha.2",
+    "canvas": "^3.2.3"
+  }
+}

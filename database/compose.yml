@@ -1,0 +1,30 @@
+name: agent-smith-database
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ${AGENT_PG_CONTAINER_NAME:-agent-postgres}
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ${AGENT_PG_DB:-agent_smith}
+      POSTGRES_USER: ${AGENT_PG_USER:-agent_smith}
+      POSTGRES_PASSWORD: ${AGENT_PG_PASSWORD:-agent_smith}
+
+    ports:
+      - "${AGENT_PG_PORT:-5433}:5432"
+
+    volumes:
+      - agent-postgres-data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${AGENT_PG_USER:-agent_smith} -d ${AGENT_PG_DB:-agent_smith}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  agent-postgres-data:
+    external: true
+    name: agent-smith-database_agent-postgres-data
