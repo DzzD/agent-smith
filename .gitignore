@@ -6,11 +6,6 @@ examples/*/.env
 examples/*/.matrix-client-storage/
 examples/*/.matrix-storage-old/
 SandboxJavascript/node_modules/
-src/core/*
-!src/core/db/
-src/core/db/*
-!src/core/db/models/
-!src/core/db/models/*.js
 src/agent/appcorejs/
 coverage/
 *.log

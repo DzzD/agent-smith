@@ -14,7 +14,6 @@
     "./skills/beta/*": "./src/skills/beta/*.js"
   },
   "scripts": {
-    "postinstall": "npm run core:generate && npm --prefix SandboxJavascript install",
     "core:generate": "app-core --project agent --target src --back",
     "db:up": "docker compose --env-file examples/.env -f database/compose.yml up -d",
     "db:down": "docker compose --env-file examples/.env -f database/compose.yml down",
