@@ -154,7 +154,29 @@ export class WebChatClient
 
     const sessionId = typingStream.sessionId;
 
-    await this.#renewTyping(streamId, sessionId, 'start');
+    try
+    {
+      await this.#renewTyping(streamId, sessionId, 'start');
+    }
+    catch (error)
+    {
+      const failedTypingStream = this.typingStreams.get(streamId);
+
+      if (failedTypingStream?.sessionId === sessionId)
+      {
+        failedTypingStream.typing = false;
+
+        if (failedTypingStream.timeoutId)
+        {
+          clearTimeout(failedTypingStream.timeoutId);
+          failedTypingStream.timeoutId = null;
+        }
+
+        this.typingStreams.delete(streamId);
+      }
+
+      throw error;
+    }
 
     return {
       streamId,

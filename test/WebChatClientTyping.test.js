@@ -31,6 +31,32 @@ test('renews typing until the assistant explicitly stops the task', async (testC
   assert.equal(typingStates.at(-1), false);
 });
 
+test('stops typing renewals when the initial typing request fails', async (testContext) =>
+{
+  let requestCount = 0;
+  const originalFetch = globalThis.fetch;
+
+  testContext.after(() =>
+  {
+    globalThis.fetch = originalFetch;
+  });
+
+  globalThis.fetch = async () =>
+  {
+    requestCount++;
+    return new Response('temporary failure', { status: 503 });
+  };
+
+  const client = new WebChatClient({ login: 'agent', password: 'password' });
+  client.authToken = 'test-token';
+
+  await assert.rejects(client.sendTypingStart('stream-a', 40), /typing_http_503/);
+  await new Promise((resolve) => setTimeout(resolve, 75));
+  await client.stop();
+
+  assert.equal(requestCount, 1);
+});
+
 test('keeps scheduling typing renewals after a transient ping failure', async (testContext) =>
 {
   let requestCount = 0;
