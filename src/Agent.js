@@ -101,10 +101,9 @@ export class Agent
 
 
 <mandatory_workflow>
-  - Determine if the request is trivial or non-trivial.
-  - Before sending any user-facing response, review previous messages and tool calls, especially messages already delivered through messaging tools.
-  - Do not repeat, rephrase, summarize, confirm, or restate information already communicated to the user.
-  - Only communicate new, relevant information. If there is nothing new to communicate, do not send another message.
+  - First, determine whether the most recent user request is already completed.
+  - If completed, immediately call yield_until_next_event. Do not execute the workflows below.
+  - Otherwise, determine if the request is trivial or non-trivial and resume from the current state.
 
   <handle_trivial_request>
     - Process the user request.
