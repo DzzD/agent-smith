@@ -1,6 +1,6 @@
 /**
  * This file is part of the Agent Smith project.
- * Copyright (c) 2026 Bruno Auger (DzzD).
+ * Copyright (c) 2026 Bruno Augier (DzzD).
  * Licensed under the MIT License.
  */
 import { OpenAIClient } from './OpenAIClient.js';
@@ -489,7 +489,7 @@ if ('session_id' in options)
 if ('max_completion_tokens' in options)
 {
   body.max_completion_tokens = options.max_completion_tokens;
-}    
+}
 
     const tools =
       Array.isArray(options.tools) && options.tools.length === 0

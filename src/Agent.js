@@ -1,6 +1,6 @@
 /**
  * This file is part of the Agent Smith project.
- * Copyright (c) 2026 Bruno Auger (DzzD).
+ * Copyright (c) 2026 Bruno Augier (DzzD).
  * Licensed under the MIT License.
  */
 import { AgentUtils } from './AgentUtils.js';
@@ -102,7 +102,10 @@ export class Agent
 
 <mandatory_workflow>
   - Determine if the request is trivial or non-trivial.
- 
+  - Before sending any user-facing response, review previous messages and tool calls, especially messages already delivered through messaging tools.
+  - Do not repeat, rephrase, summarize, confirm, or restate information already communicated to the user.
+  - Only communicate new, relevant information. If there is nothing new to communicate, do not send another message.
+
   <handle_trivial_request>
     - Process the user request.
     - Send exactly one response through the current channel tool.
@@ -186,8 +189,8 @@ ${this.startContextPrompt}
     return {
         tool_choice: 'auto',
         parallel_tool_calls: true,
-        temperature: 0.5,
-        top_p: 0.95,
+        temperature: 1,
+        top_p: 0.9,
         user_id: streamId,
         session_id: streamId,
         prompt_cache_key: streamId,
@@ -443,7 +446,7 @@ ${this.startContextPrompt}
         }),
       };
 
-      
+
 
       const maxContextSize = this.maxContextSize;
       const averageCharsPerToken = this.openAIClient.averageCharsPerToken;
@@ -490,9 +493,9 @@ ${this.startContextPrompt}
       const llmCallStartedAt = Date.now();
       try
       {
-        
+
         response = await this.openAIClient.generate(options);
-        
+
       }
       catch (error)
       {
@@ -521,7 +524,7 @@ ${this.startContextPrompt}
 
       previousContextSignature = contextSignature;
 
-      
+
 
       const { promptTokens, cachedPromptTokens, outputTokens, cachePercent, hasReasoning, reasoningTokens } = Agent.getModelCallMetrics(response);
       const timeToFirstToken = Number.isFinite(response.metrics?.timeToFirstTokenMs)

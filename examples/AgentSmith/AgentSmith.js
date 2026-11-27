@@ -1,6 +1,6 @@
 /**
  * This file is part of the Agent Smith project.
- * Copyright (c) 2026 Bruno Auger (DzzD).
+ * Copyright (c) 2026 Bruno Augier (DzzD).
  * Licensed under the MIT License.
  */
 import dotenv from 'dotenv';
@@ -95,14 +95,14 @@ export class AgentSmith extends Agent
       password: env.AGENT_PG_PASSWORD,
       poolSize: Number(env.AGENT_PG_POOL_SIZE),
     });
-    
+
     const matrixClient = new MatrixClient({
-      matrixServerUrl: env.MATRIX_HOMESERVER_URL,
-      username: env.MATRIX_USERNAME,
-      password: env.MATRIX_PASSWORD,
-      accessToken: env.MATRIX_ACCESS_TOKEN,
-      deviceId: env.MATRIX_DEVICE_ID,
-      storagePath: path.resolve(dirname, env.MATRIX_STORAGE_PATH),
+      matrixServerUrl: env.SKILL_MATRIX_HOMESERVER_URL,
+      username: env.SKILL_MATRIX_USERNAME,
+      password: env.SKILL_MATRIX_PASSWORD,
+      accessToken: env.SKILL_MATRIX_ACCESS_TOKEN,
+      deviceId: env.SKILL_MATRIX_DEVICE_ID,
+      storagePath: path.resolve(dirname, env.SKILL_MATRIX_STORAGE_PATH),
     });
 
 
@@ -118,12 +118,15 @@ export class AgentSmith extends Agent
 
     const tempFileManager = new TempFileManagerSkill();
     this.registerSkill(tempFileManager);
+
     this.registerSkill(new MemorySkill({
       url: env.SKILL_EMBEDDING_OPENAI_URL,
       apiKey: env.SKILL_EMBEDDING_OPENAI_KEY,
       model: env.SKILL_EMBEDDING_OPENAI_MODEL ?? 'text-embedding-3-small',
     }));
+
     this.registerSkill(new JavaScriptSandboxSkill({ sandboxJavascriptDirectory }), { loadOnDemand: true });
+
     this.registerSkill(new OpenAiEmbeddingSkill({
       url: env.SKILL_EMBEDDING_OPENAI_URL,
       apiKey: env.SKILL_EMBEDDING_OPENAI_KEY,

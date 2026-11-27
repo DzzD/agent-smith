@@ -1,6 +1,6 @@
 /**
  * This file is part of the Agent Smith project.
- * Copyright (c) 2026 Bruno Auger (DzzD).
+ * Copyright (c) 2026 Bruno Augier (DzzD).
  * Licensed under the MIT License.
  */
 import { AgentSkill } from '../../AgentSkill.js';
@@ -31,7 +31,7 @@ export class BraveSearchSkill extends AgentSkill
     this.summary = summary;
     this.freshness = freshness;
     this.description = 'Provides functions to search on Internet and news.';
-    
+
 
     this.tools = [
       {

@@ -1,6 +1,6 @@
 /**
  * This file is part of the Agent Smith project.
- * Copyright (c) 2026 Bruno Auger (DzzD).
+ * Copyright (c) 2026 Bruno Augier (DzzD).
  * Licensed under the MIT License.
  */
 const CONTENT_TYPE_MAP = {
@@ -766,7 +766,7 @@ export class AgentUtils
   {
     return String(value ?? '')
       .replaceAll(']]>', ']]]]><![CDATA[>');
-  }  
+  }
 
   static formatMultilineText(value)
   {

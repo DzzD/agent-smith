@@ -1,6 +1,6 @@
 /**
  * This file is part of the Agent Smith project.
- * Copyright (c) 2026 Bruno Auger (DzzD).
+ * Copyright (c) 2026 Bruno Augier (DzzD).
  * Licensed under the MIT License.
  */
 import { AgentSkill } from '../../AgentSkill.js';
@@ -252,7 +252,7 @@ export class WebChatSkill extends AgentSkill
     - messageId is optional and can be used to reply.
     - Optionally set attachSourceFile=true to attach the original HTML file.
 
-    
+
 
     send_webchat_reaction :
     - Use to react to an existing WebChat message.

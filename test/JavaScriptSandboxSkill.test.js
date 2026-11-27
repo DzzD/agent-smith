@@ -91,20 +91,6 @@ async function main()
     assert.deepEqual([...result.stdout.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
 });
 
-test('JavaScriptSandboxSkill loads bpmn-auto-layout from the private sandbox', async () =>
-{
-    const result = await run(`
-async function main()
-{
-    const { layoutProcess } = await import('bpmn-auto-layout');
-    return typeof layoutProcess;
-}
-`);
-
-    assert.equal(result.ok, true, result.stderr);
-    assert.equal(result.stdout.toString('utf8'), 'function');
-});
-
 test('JavaScriptSandboxSkill limits uncaught error output to 4096 characters', async () =>
 {
     const result = await run(`

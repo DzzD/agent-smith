@@ -1,6 +1,6 @@
 /**
  * This file is part of the Agent Smith project.
- * Copyright (c) 2026 Bruno Auger (DzzD).
+ * Copyright (c) 2026 Bruno Augier (DzzD).
  * Licensed under the MIT License.
  */
 
@@ -493,28 +493,33 @@ export class WebChatClient
       return;
     }
 
-    await this.#postTyping(streamId, true, typingStream.label, typingAction);
-
-    const refreshedTypingStream = this.typingStreams.get(streamId);
-
-    if (!refreshedTypingStream || !refreshedTypingStream.typing || refreshedTypingStream.sessionId !== sessionId)
+    try
     {
-      return;
+      await this.#postTyping(streamId, true, typingStream.label, typingAction);
     }
-
-    if (refreshedTypingStream.timeoutId)
+    finally
     {
-      clearTimeout(refreshedTypingStream.timeoutId);
-    }
+      const refreshedTypingStream = this.typingStreams.get(streamId);
 
-    refreshedTypingStream.timeoutId = setTimeout(() =>
-    {
-      this.#renewTyping(streamId, sessionId, 'refresh').catch((error) =>
+      if (!refreshedTypingStream || !refreshedTypingStream.typing || refreshedTypingStream.sessionId !== sessionId)
       {
-        console.error(`[WebChatClient] Typing renewal failed for stream ${streamId}:`, error);
-        this.#scheduleReconnect(error);
-      });
-    }, Math.floor(refreshedTypingStream.timeoutMs * 0.9));
+        return;
+      }
+
+      if (refreshedTypingStream.timeoutId)
+      {
+        clearTimeout(refreshedTypingStream.timeoutId);
+      }
+
+      refreshedTypingStream.timeoutId = setTimeout(() =>
+      {
+        this.#renewTyping(streamId, sessionId, 'refresh').catch((error) =>
+        {
+          console.error(`[WebChatClient] Typing renewal failed for stream ${streamId}:`, error);
+          this.#scheduleReconnect(error);
+        });
+      }, Math.floor(refreshedTypingStream.timeoutMs * 0.5));
+    }
   }
 
   #clearAllTypingRenewals()

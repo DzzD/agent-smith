@@ -1,6 +1,6 @@
 /**
  * This file is part of the Agent Smith project.
- * Copyright (c) 2026 Bruno Auger (DzzD).
+ * Copyright (c) 2026 Bruno Augier (DzzD).
  * Licensed under the MIT License.
  */
 import path from 'node:path';
@@ -86,11 +86,11 @@ export class MatrixClient
 
     this.deviceId = discoveredDeviceId;
 
-    console.log(`[MatrixClient] Discovered MATRIX_DEVICE_ID = ${this.deviceId}`);
+    console.log(`[MatrixClient] Discovered SKILL_MATRIX_DEVICE_ID = ${this.deviceId}`);
 
     if (typeof this.accessToken === 'string' && this.accessToken.trim())
     {
-      console.log(`[MatrixClient] Current MATRIX_ACCESS_TOKEN = ${this.accessToken}`);
+      console.log(`[MatrixClient] Current SKILL_MATRIX_ACCESS_TOKEN = ${this.accessToken}`);
     }
 
     return discoveredDeviceId;
@@ -485,7 +485,7 @@ export class MatrixClient
     if (this.typingStreams.get(roomId)?.typing)
     {
       await this.sendTypingStart(roomId);
-    } 
+    }
 
     return result;
   }
@@ -571,7 +571,7 @@ export class MatrixClient
     if (this.typingStreams.get(roomId)?.typing)
     {
       await this.sendTypingStart(roomId);
-    } 
+    }
 
     const sentMessageId = this.extractMessageId(sendResult);
 
@@ -599,7 +599,7 @@ export class MatrixClient
     }
 
     const mxcUrl = await this.client.uploadContent(buffer, mimeType, fileName);
-    
+
     const payload = {
       msgtype: 'm.image',
       body: fileName,
@@ -717,7 +717,7 @@ export class MatrixClient
           typing: true,
           timeout
         }
-      );      
+      );
       // console.log("typing start stop end");
 
       if (!currentTypingStream.typing || currentTypingStream.sessionId !== sessionId)

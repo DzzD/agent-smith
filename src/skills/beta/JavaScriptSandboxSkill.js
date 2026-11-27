@@ -1,6 +1,6 @@
 /**
  * This file is part of the Agent Smith project.
- * Copyright (c) 2026 Bruno Auger (DzzD).
+ * Copyright (c) 2026 Bruno Augier (DzzD).
  * Licensed under the MIT License.
  */
 import { spawn } from 'node:child_process';
@@ -36,7 +36,6 @@ export class JavaScriptSandboxSkill extends AgentSkill
 Executes isolated JavaScript and writes generated results to temporary files.
 Can be used to:
 - Generate images, charts, graphs, diagrams, and other visualizations using Canvas.
-- Add BPMN diagram interchange coordinates to BPMN XML using bpmn-auto-layout.
 - Draw shapes, text, icons, sprites, and custom graphics.
 - Compose, transform, resize, crop, or annotate images.
 - Generate data-driven visual assets such as dashboards, plots, heatmaps, and infographics.
@@ -141,8 +140,6 @@ Rules:
 - Return a string for text output.
 - Node.js only. No fs, network, or browser APIs.
 - For image generation or editing, use: const { createCanvas, loadImage } = require('canvas');
-- For BPMN automatic layout, use: const { layoutProcess } = await import('bpmn-auto-layout');
-- BPMN layout returns XML and possible warnings: const { xml, warnings } = await layoutProcess(sourceBpmn);
 - For graph and technical image generation, use a sufficiently large image size; 1024×768 is a good starting point.
 
 Examples:
@@ -177,20 +174,6 @@ async function main(files)
   ctx.fillRect(10, 10, 100, 100);
 
   return canvas.toBuffer('image/png');
-}
-
-async function main(files)
-{
-  const { layoutProcess } = await import('bpmn-auto-layout');
-  const sourceBpmn = files[0].data.toString('utf8');
-  const { xml, warnings } = await layoutProcess(sourceBpmn);
-
-  if (warnings.length)
-  {
-    throw new Error(warnings.join('\n'));
-  }
-
-  return xml;
 }
 `;
   }

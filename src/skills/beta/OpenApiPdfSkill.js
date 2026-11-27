@@ -1,6 +1,6 @@
 /**
  * This file is part of the Agent Smith project.
- * Copyright (c) 2026 Bruno Auger (DzzD).
+ * Copyright (c) 2026 Bruno Augier (DzzD).
  * Licensed under the MIT License.
  */
 import { OpenApiSkill } from '../ext/OpenApiSkill.js';
@@ -29,7 +29,7 @@ export class OpenApiPdfSkill extends OpenApiSkill
   {
     return `
       ${super.usage}
-      
+
       PDF rules :
       - When receiving a PDF file, do not trigger any operation on it unless the user explicitly asks for it.
       - Do not list endpoints. Use the Well known endpoints below directly.
@@ -108,6 +108,6 @@ export class OpenApiPdfSkill extends OpenApiSkill
 
 
       `.trim();
-      
+
   }
 }
